@@ -95,23 +95,25 @@ describe("ApplicationController", () =>{
         })
     })
 
-    // describe("#buildPaginationObject", () =>{
-    //     it("should return build pagination", () => {
-    //         const mockRequest = {
-    //             query: {
-    //                 page: 1,
-    //                 pageSize: 10 
-    //              }
-    //         }
-    //         const applicationController = new ApplicationController()
-    //         const pageCount = applicationController.buildPaginationObject(mockRequest)
-    //         expect(pageCount).toBe({
-    //             page,
-    //             pageCount,
-    //             pageSize,
-    //             count,
-    //           });
-    //     })
-    // })
+    describe("#buildPaginationObject", () =>{
+        it("should return build pagination", () => {
+            const count = 10;
+            const mockRequest = {
+                query: {
+                    page: 1,
+                    pageSize: 10 
+                 }
+            }
+            const applicationController = new ApplicationController()
+            const paginationObject = applicationController.buildPaginationObject(mockRequest, count);
+            expect(paginationObject).toEqual({
+                page: 1,
+                pageCount: 1,
+                pageSize: 10,
+                count: 10,
+            });
+
+        })
+    })
 
 })
