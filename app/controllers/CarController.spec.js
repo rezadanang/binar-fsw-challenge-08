@@ -1,67 +1,30 @@
 const CarController = require('./CarController');
-const { sequelize, Car } = require('../models');
 const page = require('./ApplicationController');
-const { queryInterface } = sequelize;
-
-
-// beforeAll(async () => {
-
-//     await queryInterface.bulkInsert('Cars', [
-//         {
-//             name:   'Avanza G 2022',
-//             price:  '500000',
-//             size:   'middle',
-//             image:  'alvanza.jpg',
-//             isCurrentlyRented: '',
-//             createdAt: new Date(),
-//             updatedAt: new Date()
-//         }
-
-//     ], {});
-// });
-
-// afterAll(async () => {
-//     await queryInterface.bulkDelete('Cars', null, {});
-// });
+const { Car } = require('../models');
 
 describe('CarController', () => {
-
-    // describe('handleListCar', () => {
-    //     it('should return a list of cars', async () => {
-    //     });
-
-    // });
-
-    describe('handleGetCar', () => {
-        it('should return a car', async () => {
+    describe('#handleGetCar', () => {
+        it('Should return data car', async () => {
             const Cars = [
                 {
                 id: 1,
-                name: 'Toyota Innova Reborn 2022',
-                price: '700000',
-                size:  'large',
-                image: 'innova.jpg',
-                isCurrentlyRented: true,
-                },
-                {
-                id: 2,
-                name: 'Toyota Innova 2022',
-                price: '650000',
-                size:  'large',
-                image: 'innova.jpg',
+                name: 'Mazda RX4',
+                price: '300000',
+                size:  'Small',
+                image: 'mazda-rx4.jpg',
                 isCurrentlyRented: true,
                 }
             ];
-
-            const mockcarModel = {
-                findByPk: jest.fn().mockReturnValue(Cars)
-            }
 
             const carsController = new CarController({
                 carModel: mockcarModel
             });
 
-              const mockRequest = {
+            const mockcarModel = {
+                findByPk: jest.fn().mockReturnValue(Cars)
+            }
+
+            const mockRequest = {
                 params: {
                     id: 1
                 }
@@ -81,13 +44,13 @@ describe('CarController', () => {
     });
 
     describe('#handleCreateCar', () => {
-        it('should return 201 code and the car is created', async () => {
+        it('Should return 201 code and the car is created', async () => {
                 const Cars = new Car({
                     id: 1,
-                    name: "Kijang Innova Reborn",
-                    price: "750000",
-                    size: "large",
-                    image: "innova.jpg",
+                    name: 'Mazda RX4',
+                    price: '300000',
+                    size:  'Small',
+                    image: 'mazda-rx4.jpg',
                     isCurrentlyRented: false,
                 });
                 const mockCar = {
@@ -100,10 +63,10 @@ describe('CarController', () => {
 
                 const mockRequest = {
                     body: {
-                        name: "Kijang Innova Reborn",
-                        price: "750000",
-                        size: "large",
-                        image: "innova.jpg",
+                        name: 'Mazda RX4',
+                        price: '300000',
+                        size:  'Small',
+                        image: 'mazda-rx4.jpg',
                     },
                 };
 
@@ -122,7 +85,7 @@ describe('CarController', () => {
                 expect(mockResponse.json).toHaveBeenCalledWith(Cars);
                 });
 
-            it("should return a 422 status if there's an error", async () => {
+            it("Should return 422 code if there is an error", async () => {
                 const mockCar = {
                     create: jest.fn(() => Promise.reject(err)),
                 };
@@ -133,10 +96,10 @@ describe('CarController', () => {
 
                 const mockRequest = {
                     body: {
-                        name: "Kijang Innova Reborn",
-                        price: "750000",
-                        size: "large",
-                        image: "innova.jpg",
+                        name: 'Mazda RX4',
+                        price: '300000',
+                        size:  'Small',
+                        image: 'mazda-rx4.jpg',
                     },
                 };
 
@@ -164,14 +127,14 @@ describe('CarController', () => {
     });
 
     describe('#handleUpdateCar', () => {
-        it('should return a 200 code an updated', async () => {
+        it('Should return a 200 code if updated', async () => {
             const Cars = new Car({
-                    id: 1,
-                    name: "Kijang Innova Reborn",
-                    price: "750000",
-                    size: "large",
-                    image: "innova.jpg",
-                    isCurrentlyRented: false,
+                id: 1,
+                name: 'Mazda RX4',
+                price: '300000',
+                size:  'Small',
+                image: 'mazda-rx4.jpg',
+                isCurrentlyRented: false,
             });
             const mockCar = {
                 findByPk: jest.fn().mockReturnValue(Cars),
@@ -183,10 +146,10 @@ describe('CarController', () => {
 
             const mockRequest = {
                 body: {
-                    name: "Kijang Innova Reborn",
-                    price: "750000",
-                    size: "large",
-                    image: "innova.jpg",
+                    name: "Mazda RX4",
+                    price: "300000",
+                    size: "Small",
+                    image: "mazda-rx4.jpg",
                 },
                 params: {
                 id: 1,
@@ -205,7 +168,7 @@ describe('CarController', () => {
         });
 
 
-        it("should return a 422 code and status cars not updated", async () => {
+        it("should return a 422 code and car status not updated", async () => {
                     const mockCar = {
                         findByPk: jest.fn().mockReturnValue(null),
                     };
@@ -216,10 +179,10 @@ describe('CarController', () => {
 
                     const mockRequest = {
                     body: {
-                        name: "Kijang Innova Reborn",
-                        price: "750000",
-                        size: "large",
-                        image: "innova.jpg",
+                        name: 'Mazda RX4',
+                        price: '300000',
+                        size:  'Small',
+                        image: 'mazda-rx4.jpg',
                         isCurrentlyRented: false,
                         },
                         params: {
@@ -247,13 +210,13 @@ describe('CarController', () => {
 
 
         describe('#handleDeleteCar', () => {
-            it('should return a 204 code an deleted the car', async () => {
+            it('should return a 204 code an deleted data car', async () => {
                 const Cars = {
                     id: 1,
-                    name: "Kijang Innova Reborn",
-                    price: "750000",
-                    size: "large",
-                    image: "innova.jpg",
+                    name: 'Mazda RX4',
+                    price: '300000',
+                    size:  'Small',
+                    image: 'mazda-rx4.jpg',
                     isCurrentlyRented: false,
                 };
                 const car = new Car({
@@ -265,18 +228,11 @@ describe('CarController', () => {
                     id: 1,
                     },
                 };
-
-
                 const mockCar = {};
-
                 mockCar.destroy = jest.fn().mockReturnValue(car);
-
                 const mockResponse = {};
-
                 mockResponse.status = jest.fn().mockReturnThis();
-
                 mockResponse.end = jest.fn().mockReturnThis();
-
                 const carsController = new CarController({
                     carModel: mockCar,
                 });
@@ -285,15 +241,8 @@ describe('CarController', () => {
 
                 expect(mockResponse.status).toHaveBeenCalledWith(204);
                 expect(mockResponse.end).toHaveBeenCalled();
-
-
             });
 
       });
-
-
-
-
-
 
 });
