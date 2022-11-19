@@ -275,7 +275,7 @@ describe('CarController', () => {
 
     });
     describe('#handleRentCar', () => {
-        it('should call response code 201 and return userCar',
+        it('should call response code 201 and return user car',
             async () => {
                 const rentStartedAt = new Date().toISOString();
                 const rentEndedAt = dayjs(rentStartedAt).add(1, 'day');
@@ -321,7 +321,7 @@ describe('CarController', () => {
                 });
             });
 
-        it('should call response status 422 and CarAlreadyRentedError if car already rented.', async () => {
+        it('should call response status 422 and error if car already rented.', async () => {
                 const rentStartedAt = new Date().toISOString();
                 const rentEndedAt = dayjs(rentStartedAt).add(1, 'day');
                 const mockRequest = {
@@ -356,7 +356,7 @@ describe('CarController', () => {
                 });
 
                 await controller.handleRentCar(mockRequest, mockRes, mockNext);
-                
+
                 const err = new CarAlreadyRentedError(mockDataCar);
                 expect(mockRes.status).toHaveBeenCalledWith(422);
                 expect(mockRes.json).toHaveBeenCalledWith(err);
