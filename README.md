@@ -15,6 +15,7 @@ yarn install
 3. Start project
 ```
 yarn start
+```
 
 # BCR API
 
