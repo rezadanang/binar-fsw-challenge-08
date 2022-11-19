@@ -1,5 +1,8 @@
-# LINK DEPLOYMENT
+# LINK URL DEPLOYMENT WITH RAILWAY
 https://binar-fsw-challenge-08-production.up.railway.app/
+
+# TEST RESULT
+![Test Result](test/test.png)
 
 # BCR API
 
