@@ -1,10 +1,10 @@
 const CarController = require('./CarController');
-const page = require('./ApplicationController');
+const Page = require('./ApplicationController');
 const { Car } = require('../models');
 
 describe('CarController', () => {
     describe('#handleGetCar', () => {
-        it('Should return data car', async () => {
+        it('should return data cars', async () => {
             const Cars = [
                 {
                 id: 1,
@@ -44,7 +44,7 @@ describe('CarController', () => {
     });
 
     describe('#handleCreateCar', () => {
-        it('Should return 201 code and the car is created', async () => {
+        it('should response status 201 and the car is created', async () => {
                 const Cars = new Car({
                     id: 1,
                     name: 'Mazda RX4',
@@ -85,7 +85,7 @@ describe('CarController', () => {
                 expect(mockResponse.json).toHaveBeenCalledWith(Cars);
                 });
 
-            it("Should return 422 code if there is an error", async () => {
+        it("should response status 422 if there is an error", async () => {
                 const mockCar = {
                     create: jest.fn(() => Promise.reject(err)),
                 };
@@ -127,7 +127,7 @@ describe('CarController', () => {
     });
 
     describe('#handleUpdateCar', () => {
-        it('Should return a 200 code if updated', async () => {
+        it('should response status 200 if updated car', async () => {
             const Cars = new Car({
                 id: 1,
                 name: 'Mazda RX4',
@@ -168,7 +168,7 @@ describe('CarController', () => {
         });
 
 
-        it("should return a 422 code and car status not updated", async () => {
+        it("should response status 422 and car status not updated", async () => {
                     const mockCar = {
                         findByPk: jest.fn().mockReturnValue(null),
                     };
@@ -209,40 +209,42 @@ describe('CarController', () => {
     });
 
 
-        describe('#handleDeleteCar', () => {
-            it('should return a 204 code an deleted data car', async () => {
-                const Cars = {
-                    id: 1,
-                    name: 'Mazda RX4',
-                    price: '300000',
-                    size:  'Small',
-                    image: 'mazda-rx4.jpg',
-                    isCurrentlyRented: false,
-                };
-                const car = new Car({
-                    Cars,
-                });
-
-                const mockRequest = {
-                    params: {
-                    id: 1,
-                    },
-                };
-                const mockCar = {};
-                mockCar.destroy = jest.fn().mockReturnValue(car);
-                const mockResponse = {};
-                mockResponse.status = jest.fn().mockReturnThis();
-                mockResponse.end = jest.fn().mockReturnThis();
-                const carsController = new CarController({
-                    carModel: mockCar,
-                });
-
-                await carsController.handleDeleteCar(mockRequest, mockResponse);
-
-                expect(mockResponse.status).toHaveBeenCalledWith(204);
-                expect(mockResponse.end).toHaveBeenCalled();
+    describe('#handleDeleteCar', () => {
+        it('should response status 204 an deleted data car', async () => {
+            const Cars = {
+                id: 1,
+                name: 'Mazda RX4',
+                price: '300000',
+                size:  'Small',
+                image: 'mazda-rx4.jpg',
+                isCurrentlyRented: false,
+            };
+            const car = new Car({
+                Cars,
             });
 
-      });
+            const mockRequest = {
+                params: {
+                id: 1,
+                },
+            };
+            const mockCar = {};
+            const mockResponse = {};
+            
+            mockCar.destroy = jest.fn().mockReturnValue(car);
+            mockResponse.status = jest.fn().mockReturnThis();
+            mockResponse.end = jest.fn().mockReturnThis();
+
+            const carsController = new CarController({
+                carModel: mockCar,
+            });
+
+            await carsController.handleDeleteCar(mockRequest, mockResponse);
+
+            expect(mockResponse.status).toHaveBeenCalledWith(204);
+            expect(mockResponse.end).toHaveBeenCalled();
+        });
+
+    });
 
 });

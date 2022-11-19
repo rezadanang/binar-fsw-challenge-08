@@ -3,7 +3,7 @@ const ApplicationController = require('./ApplicationController');
 
 describe("ApplicationController", () =>{
     describe("#handleGetRoot", () => {
-        it("should call res.status(200) and res.json with status and message", () => {
+        it("should call response status 200 and res.json with status and message", () => {
             
             const mockRequest = {};
             const mockResponse = {
@@ -25,7 +25,7 @@ describe("ApplicationController", () =>{
     })
 
     describe("#handleNotFound", () =>{
-        it("should call res.status(404) and res.json with error not found", () => {
+        it("should call response status 404 and res.json with error not found", () => {
             const mockRequest = {
                 method: 'get',
                 url: 'localhost:8000'
@@ -53,7 +53,7 @@ describe("ApplicationController", () =>{
     })
 
     describe("#handleError", () =>{
-        it("should call res.status(500) and res.json with error", () => {
+        it("should call response status 500 and res.json with error", () => {
             const mockRequest = {
                 method: 'get',
                 url: 'localhost:8000'

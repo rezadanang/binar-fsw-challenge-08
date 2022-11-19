@@ -1,3 +1,6 @@
+# LINK DEPLOYMENT
+https://binar-fsw-challenge-08-production.up.railway.app/
+
 # BCR API
 
 Di dalam repository ini terdapat implementasi API dari Binar Car Rental.
